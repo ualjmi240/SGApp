@@ -28,7 +28,24 @@
       <tbody>
         <?php
 
-        $conexion = mysqli_connect(getenv('MYSQL_HOST'), getenv('MYSQL_USER'), getenv('MYSQL_PASSWORD'), "SG");
+        $host = getenv('MYSQL_HOST');
+        $user = getenv('MYSQL_USER');
+        $password = getenv('MYSQL_PASSWORD');
+
+        error_log(json_encode([
+            'host' => $host,
+            'user' => $user,
+            'password_exists' => $password !== false && $password !== '',
+            'password_length' => strlen((string) $password),
+            'leading_space' => $password !== ltrim((string) $password),
+            'trailing_space' => $password !== rtrim((string) $password),
+            'has_newline' => strpos((string) $password, "\n") !== false ||
+                            strpos((string) $password, "\r") !== false
+        ]));
+
+        $conexion = mysqli_connect($host, $user, $password, 'SG');
+
+        //$conexion = mysqli_connect(getenv('MYSQL_HOST'), getenv('MYSQL_USER'), getenv('MYSQL_PASSWORD'), "SG");
 
         $cadenaSQL = "select * from s_customer";
         $resultado = mysqli_query($conexion, $cadenaSQL);
