@@ -28,29 +28,7 @@
       <tbody>
         <?php
 
-$host = getenv('MYSQL_HOST');
-$user = getenv('MYSQL_USER');
-$password = getenv('MYSQL_PASSWORD');
-
-error_log(json_encode([
-    'vercel_env' => getenv('VERCEL_ENV'),
-    'vercel_url' => getenv('VERCEL_URL'),
-    'commit' => getenv('VERCEL_GIT_COMMIT_SHA'),
-    'host' => $host,
-    'user' => $user,
-    'password_length' => strlen((string) $password),
-    'password_hash' => hash('sha256', (string) $password),
-]));
-
-$conexion = mysqli_connect(
-    $host,
-    $user,
-    $password,
-    'SG',
-    3306
-);
-
-        //$conexion = mysqli_connect(getenv('MYSQL_HOST'), getenv('MYSQL_USER'), getenv('MYSQL_PASSWORD'), "SG");
+        $conexion = mysqli_connect(getenv('MYSQL_HOST'), getenv('MYSQL_USER'), getenv('MYSQL_PASSWORD'), "SG");
 
         $cadenaSQL = "select * from s_customer";
         $resultado = mysqli_query($conexion, $cadenaSQL);
